@@ -64,4 +64,19 @@ class ClinicTest {
         Assertions.assertEquals("Bob", clinic.getNextInRadiologyQueue().name);
         Assertions.assertEquals("Jack", clinic.getNextInRadiologyQueue().name);
     }
+
+    // Doctor : GRAVITY Radiology : GRAVITY
+    @Test
+    public void patientHasMoreSevereRadiologySymptoms_ShouldBeFirstDoctorQueue_ShouldBeFirstInRadiologyQueue() {
+        Clinic clinic = new Clinic(TriageType.GRAVITY, TriageType.GRAVITY);
+
+        clinic.triagePatient("Bob", 2, VisibleSymptom.SPRAIN);
+        clinic.triagePatient("Jack", 7, VisibleSymptom.BROKEN_BONE);
+
+        Assertions.assertEquals("Jack", clinic.getNextInDoctorQueue().name);
+        Assertions.assertEquals("Bob", clinic.getNextInDoctorQueue().name);
+
+        Assertions.assertEquals("Jack", clinic.getNextInRadiologyQueue().name);
+        Assertions.assertEquals("Bob", clinic.getNextInRadiologyQueue().name);
+    }
 }
