@@ -79,4 +79,29 @@ class ClinicTest {
         Assertions.assertEquals("Jack", clinic.getNextInRadiologyQueue().name);
         Assertions.assertEquals("Bob", clinic.getNextInRadiologyQueue().name);
     }
+
+    // CORONA
+    @Test
+    public void patientHasCoronavirus_ShouldNotBeInAnyQueue() {
+        Clinic clinic = new Clinic(TriageType.FIFO,TriageType.FIFO);
+
+        clinic.triagePatient("Paul",6, VisibleSymptom.CORONAVIRUS);
+
+        Assertions.assertNull(clinic.getNextInDoctorQueue());
+        Assertions.assertNull(clinic.getNextInRadiologyQueue());
+    }
+
+    @Test
+    public void mixOfPatientsWithAnWithoutCoronavirus_PatientsWithoutShouldBeInQueue() {
+        Clinic clinic = new Clinic(TriageType.FIFO,TriageType.FIFO);
+
+        clinic.triagePatient("Paul",6, VisibleSymptom.CORONAVIRUS);
+        clinic.triagePatient("Bob", 2, VisibleSymptom.COLD);
+        clinic.triagePatient("Jack", 7, VisibleSymptom.BROKEN_BONE);
+
+        Assertions.assertEquals("Bob", clinic.getNextInDoctorQueue().name);
+        Assertions.assertEquals("Jack", clinic.getNextInDoctorQueue().name);
+
+        Assertions.assertEquals("Jack", clinic.getNextInRadiologyQueue().name);
+    }
 }

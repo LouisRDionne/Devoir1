@@ -28,4 +28,27 @@ class CommunityCenterTest {
 
         Assertions.assertEquals("John", cc.getNextInQueue().name);
     }
+
+    // CORONA
+    @Test
+    public void patientsHaveCoronavirus_ShouldNotBeInQueue() {
+        CommunityCenter cc = new CommunityCenter(TriageType.FIFO);
+
+        cc.triagePatient("John", 6, VisibleSymptom.CORONAVIRUS);
+        cc.triagePatient("Bob", 3, VisibleSymptom.CORONAVIRUS);
+        cc.triagePatient("Adam", 5, VisibleSymptom.CORONAVIRUS);
+
+        Assertions.assertNull(cc.getNextInQueue());
+    }
+
+    @Test
+    public void mixOfPatientsWithAnWithoutCoronavirus_PatientsWithoutShouldBeInQueue() {
+        CommunityCenter cc = new CommunityCenter(TriageType.FIFO);
+
+        cc.triagePatient("John", 6, VisibleSymptom.CORONAVIRUS);
+        cc.triagePatient("Bob", 3);
+        cc.triagePatient("Adam", 5, VisibleSymptom.CORONAVIRUS);
+
+        Assertions.assertEquals("Bob", cc.getNextInQueue().name);
+    }
 }

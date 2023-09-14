@@ -17,6 +17,19 @@ public class CommunityCenter {
         } else {
             queue.add(newPatient);
         }
+
+    }
+
+    public void triagePatient(String name, int gravity, VisibleSymptom visibleSymptom) {
+        Patient newPatient = new Patient(name,gravity, visibleSymptom);
+
+        if (newPatient.visibleSymptom != VisibleSymptom.CORONAVIRUS) {
+            if (triageType.equals(TriageType.GRAVITY) && newPatient.gravity > 5) {
+                queue.addFirst(newPatient);
+            } else {
+                queue.add(newPatient);
+            }
+        }
     }
 
     public Patient getNextInQueue() {
