@@ -10,4 +10,9 @@ public class Patient {
         this.gravity = gravity;
         this.visibleSymptom = visibleSymptom;
     }
+
+    public Patient(String name, int gravity) {
+        this.name = name;
+        this.gravity = gravity;
+    }
 }
